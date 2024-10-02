@@ -1,0 +1,358 @@
+Database Name: [HEALTH RECORD SYSTEM]
+
+Tables:
+
+
+-- creating the tables 
+
+create table details (
+    user_id integer primary key,
+    first_name varchar(200) not null,
+    last_name varchar(200) not null,
+    user_age integer not null,
+    user_gender varchar(50) not null,
+    body_weight numeric not null check (body_weight > 0),
+    height numeric not null check (height > 0),
+    mobile_number varchar(200)
+);
+
+create table calculated_details (
+    user_id integer primary key,
+    first_name varchar(200) not null,
+    last_name varchar(200) not null,
+    user_age integer not null,
+    user_gender varchar(50) not null,
+    body_weight numeric not null check (body_weight > 0),
+    height numeric not null check (height > 0),
+    bmi numeric not null check (bmi > 0),
+    bmr numeric not null check (bmr > 0),
+    calorie_per_day numeric not null check (calorie_per_day > 0),
+    protein_requirement numeric not null check (protein_requirement > 0),
+    mobile_number varchar(200),
+    foreign key (user_id) references details(user_id)
+ 
+);
+
+create table range (
+    user_id integer primary key,
+    first_name varchar(200) not null,
+    last_name varchar(200) not null,
+    user_age integer not null,
+    user_gender varchar(50) not null,
+    bmi numeric not null check (bmi > 0),
+    bmi_range varchar(100) not null,
+    foreign key (user_id) references calculated_details(user_id)
+);
+
+create table workout_plan (
+    user_id integer primary key,
+    chest varchar(100) not null,
+    back varchar(100) not null,
+    bicep varchar(100) not null,
+    tricep varchar(100) not null,
+    shoulder varchar(100) not null,
+    legs varchar(100) not null,
+    foreign key (user_id) references details(user_id)
+);
+
+create table diet_name (
+    user_id integer primary key,
+    monday varchar(200) not null,
+    tuesday varchar(200) not null,
+    wednesday varchar(200) not null,
+    thursday varchar(200) not null,
+    friday varchar(200) not null,
+    saturday varchar(200) not null,
+    foreign key (user_id) references details(user_id)
+);
+
+create table diet_schedule (
+    user_id integer primary key,
+    time varchar(100) not null,
+    monday varchar(200) not null,
+    tuesday varchar(200) not null,
+    wednesday varchar(200) not null,
+    thursday varchar(200) not null,
+    friday varchar(200) not null,
+    saturday varchar(200) not null,
+    foreign key (user_id) references details(user_id)
+);
+
+
+-- inserting the values
+	  	
+-- insert data into details table
+insert into details (user_id, first_name, last_name, user_age, user_gender, body_weight, height, mobile_number)
+values
+(1, 'urval', 'shah', 25, 'male', 70, 180, '1234567890'),
+(2, 'pratham', 'shah', 30, 'male', 65, 165, '2345678901'),
+(3, 'jay', 'patil', 28, 'male', 80, 175, '3456789012'),
+(4, 'shlok', 'gupta', 32, 'female', 68, 160, '4567890123'),
+(5, 'ronil', 'singh', 29, 'male', 75, 185, '5678901234'),
+(6, 'vraj', 'mishra', 27, 'female', 62, 170, '6789012345'),
+(7, 'dev', 'yadav', 31, 'male', 85, 178, '7890123456'),
+(8, 'advait', 'rao', 26, 'female', 64, 163, '8901234567'),
+(9, 'ramesh', 'dube', 29, 'male', 73, 182, '9012345678'),
+(10, 'suresh', 'malik', 34, 'female', 67, 168, '0123456789'),
+(11, 'ravi', 'saxena', 28, 'male', 78, 176, '1111111111'),
+(12, 'pooja', 'agarwal', 33, 'female', 66, 162, '2222222222'),
+(13, 'rohit', 'shukla', 30, 'male', 72, 180, '3333333333'),
+(14, 'jyoti', 'thakur', 29, 'female', 63, 167, '4444444444'),
+(15, 'sandeep', 'tiwari', 27, 'male', 76, 183, '5555555555'),
+(16, 'anjali', 'sharma', 31, 'female', 69, 169, '6666666666'),
+(17, 'arun', 'verma', 28, 'male', 79, 177, '7777777777'),
+(18, 'smita', 'gandhi', 32, 'female', 70, 165, '8888888888'),
+(19, 'rajat', 'joshi', 30, 'male', 74, 179, '9999999999'),
+(20, 'nisha', 'biswas', 29, 'female', 68, 171, '1010101010');
+
+-- insert data into calculated_details table
+insert into calculated_details (user_id, first_name, last_name, user_age, user_gender, body_weight, height, bmi, bmr, calorie_per_day, protein_requirement, mobile_number)
+values
+(1, 'urval', 'shah', 25, 'male', 70, 180, 24.5, 1900, 2500, 80, '1234567890'),
+(2, 'pratham', 'shah', 30, 'male', 65, 165, 26.2, 1600, 2000, 70, '2345678901'),
+(3, 'jay', 'patil', 28, 'male', 80, 175, 26.1, 1950, 2300, 85, '3456789012'),
+(4, 'shlok', 'gupta', 32, 'female', 68, 160, 26.6, 1600, 1900, 75, '4567890123'),
+(5, 'ronil', 'singh', 29, 'male', 75, 185, 21.9, 2000, 2600, 90, '5678901234'),
+(6, 'vraj', 'mishra', 27, 'female', 62, 170, 21.5, 1500, 1800, 65, '6789012345'),
+(7, 'dev', 'yadav', 31, 'male', 85, 178, 26.8, 2050, 2400, 88, '7890123456'),
+(8, 'advait', 'rao', 26, 'female', 64, 163, 24.1, 1550, 2000, 70, '8901234567'),
+(9, 'ramesh', 'dube', 29, 'male', 73, 182, 22.0, 1900, 2500, 80, '9012345678'),
+(10, 'suresh', 'malik', 34, 'female', 67, 168, 23.8, 1500, 1800, 65, '0123456789'),
+(11, 'ravi', 'saxena', 28, 'male', 78, 176, 25.2, 2000, 2600, 90, '1111111111'),
+(12, 'pooja', 'agarwal', 33, 'female', 66, 162, 25.1, 1600, 1900, 75, '2222222222'),
+(13, 'rohit', 'shukla', 30, 'male', 72, 180, 22.2, 1950, 2300, 85, '3333333333'),
+(14, 'jyoti', 'thakur', 29, 'female', 63, 167, 22.6, 1550, 2000, 70, '4444444444'),
+(15, 'sandeep', 'tiwari', 27, 'male', 76, 183, 22.7, 2050, 2400, 88, '5555555555'),
+(16, 'anjali', 'sharma', 31, 'female', 69, 169, 24.2, 1600, 1900, 75, '6666666666'),
+(17, 'arun', 'verma', 28, 'male', 79, 177, 25.2, 2000, 2600, 90, '7777777777'),
+(18, 'smita', 'gandhi', 32, 'female', 70, 165, 25.7, 1500, 1800, 65, '8888888888'),
+(19, 'rajat', 'joshi', 30, 'male', 74, 179, 23.1, 1900, 2500, 80, '9999999999'),
+(20, 'nisha', 'biswas', 29, 'female', 68, 171, 23.2, 1550, 2000, 70, '1010101010');
+
+
+
+
+insert into range (user_id, first_name, last_name, user_age, user_gender, bmi, bmi_range)
+values
+(1, 'urval', 'shah', 25, 'male', 24.5, 'normal weight'),
+(2, 'pratham', 'shah', 30, 'male', 26.2, 'overweight'),
+(3, 'jay', 'patil', 28, 'male', 26.1, 'overweight'),
+(4, 'shlok', 'gupta', 32, 'female', 26.6, 'overweight'),
+(5, 'ronil', 'singh', 29, 'male', 21.9, 'normal weight'),
+(6, 'vraj', 'mishra', 27, 'female', 21.5, 'normal weight'),
+(7, 'dev', 'yadav', 31, 'male', 26.8, 'overweight'),
+(8, 'advait', 'rao', 26, 'female', 24.1, 'normal weight'),
+(9, 'ramesh', 'dube', 29, 'male', 22.0, 'normal weight'),
+(10, 'suresh', 'malik', 34, 'female', 23.8, 'normal weight'),
+(11, 'ravi', 'saxena', 28, 'male', 25.2, 'normal weight'),
+(12, 'pooja', 'agarwal', 33, 'female', 25.1, 'normal weight'),
+(13, 'rohit', 'shukla', 30, 'male', 22.2, 'normal weight'),
+(14, 'jyoti', 'thakur', 29, 'female', 22.6, 'normal weight'),
+(15, 'sandeep', 'tiwari', 27, 'male', 22.7, 'normal weight'),
+(16, 'anjali', 'sharma', 31, 'female', 24.2, 'normal weight'),
+(17, 'arun', 'verma', 28, 'male', 25.2, 'normal weight'),
+(18, 'smita', 'gandhi', 32, 'female', 25.7, 'normal weight'),
+(19, 'rajat', 'joshi', 30, 'male', 23.1, 'normal weight'),
+(20, 'nisha', 'biswas', 29, 'female', 23.2, 'normal weight');
+
+
+
+insert into workout_plan (user_id, chest, back, bicep, tricep, shoulder, legs)
+values
+(1, 'push-ups, bench press', 'pull-ups, bent over rows', 'bicep curls', 'tricep dips', 'shoulder press', 'squats, lunges'),
+(2, 'push-ups, dumbbell press', 'pull-ups, lat pulldowns', 'hammer curls', 'tricep kickbacks', 'shoulder flys', 'leg press, leg curls'),
+(3, 'bench press, incline press', 'pull-ups, lat pulldowns', 'hammer curls', 'tricep dips', 'shoulder press', 'squats, lunges'),
+(4, 'push-ups, chest flys', 'pull-ups, bent over rows', 'bicep curls', 'tricep kickbacks', 'shoulder press', 'leg press, lunges'),
+(5, 'dumbbell press, bench press', 'pull-ups, lat pulldowns', 'hammer curls', 'tricep dips', 'shoulder flys', 'squats, lunges'),
+(6, 'push-ups, chest flys', 'pull-ups, bent over rows', 'bicep curls', 'tricep dips', 'shoulder press', 'leg press, lunges'),
+(7, 'bench press, incline press', 'pull-ups, lat pulldowns', 'hammer curls', 'tricep kickbacks', 'shoulder press', 'squats, lunges'),
+(8, 'push-ups, dumbbell press', 'pull-ups, bent over rows', 'bicep curls', 'tricep kickbacks', 'shoulder flys', 'leg press, lunges'),
+(9, 'push-ups, bench press', 'pull-ups, lat pulldowns', 'hammer curls', 'tricep dips', 'shoulder press', 'squats, lunges'),
+(10, 'bench press, incline press', 'pull-ups, bent over rows', 'bicep curls', 'tricep kickbacks', 'shoulder press', 'leg press, lunges'),
+(11, 'push-ups, chest flys', 'pull-ups, lat pulldowns', 'hammer curls', 'tricep dips', 'shoulder flys', 'squats, lunges'),
+(12, 'dumbbell press, bench press', 'pull-ups, bent over rows', 'bicep curls', 'tricep dips', 'shoulder press', 'leg press, lunges'),
+(13, 'bench press, incline press', 'pull-ups, lat pulldowns', 'hammer curls', 'tricep kickbacks', 'shoulder press', 'squats, lunges'),
+(14, 'push-ups, dumbbell press', 'pull-ups, bent over rows', 'bicep curls', 'tricep kickbacks', 'shoulder flys', 'leg press, lunges'),
+(15, 'push-ups, bench press', 'pull-ups, lat pulldowns', 'hammer curls', 'tricep dips', 'shoulder press', 'squats, lunges'),
+(16, 'bench press, incline press', 'pull-ups, bent over rows', 'bicep curls', 'tricep kickbacks', 'shoulder press', 'leg press, lunges'),
+(17, 'push-ups, chest flys', 'pull-ups, lat pulldowns', 'hammer curls', 'tricep dips', 'shoulder flys', 'squats, lunges'),
+(18, 'dumbbell press, bench press', 'pull-ups, bent over rows', 'bicep curls', 'tricep dips', 'shoulder press', 'leg press, lunges'),
+(19, 'bench press, incline press', 'pull-ups, lat pulldowns', 'hammer curls', 'tricep kickbacks', 'shoulder press', 'squats, lunges'),
+(20, 'push-ups, dumbbell press', 'pull-ups, bent over rows', 'bicep curls', 'tricep kickbacks', 'shoulder flys', 'leg press, lunges');
+
+    
+
+
+insert into diet_name (user_id, monday, tuesday, wednesday, thursday, friday, saturday)
+values
+(1, 'breakfast: eggs, toast', 'lunch: grilled chicken, vegetables', 'dinner: salmon, quinoa', 'breakfast: oatmeal, banana', 'lunch: salad, grilled tofu', 'dinner: stir-fry, brown rice'),
+(2, 'breakfast: greek yogurt, berries', 'lunch: turkey wrap, salad', 'dinner: grilled fish, sweet potato', 'breakfast: smoothie', 'lunch: chickpea salad', 'dinner: vegetable stir-fry, rice'),
+(3, 'breakfast: eggs, toast', 'lunch: grilled chicken, vegetables', 'dinner: salmon, quinoa', 'breakfast: oatmeal, banana', 'lunch: salad, grilled tofu', 'dinner: stir-fry, brown rice'),
+(4, 'breakfast: greek yogurt, berries', 'lunch: turkey wrap, salad', 'dinner: grilled fish, sweet potato', 'breakfast: smoothie', 'lunch: chickpea salad', 'dinner: vegetable stir-fry, rice'),
+(5, 'breakfast: eggs, toast', 'lunch: grilled chicken, vegetables', 'dinner: salmon, quinoa', 'breakfast: oatmeal, banana', 'lunch: salad, grilled tofu', 'dinner: stir-fry, brown rice'),
+(6, 'breakfast: greek yogurt, berries', 'lunch: turkey wrap, salad', 'dinner: grilled fish, sweet potato', 'breakfast: smoothie', 'lunch: chickpea salad', 'dinner: vegetable stir-fry, rice'),
+(7, 'breakfast: eggs, toast', 'lunch: grilled chicken, vegetables', 'dinner: salmon, quinoa', 'breakfast: oatmeal, banana', 'lunch: salad, grilled tofu', 'dinner: stir-fry, brown rice'),
+(8, 'breakfast: greek yogurt, berries', 'lunch: turkey wrap, salad', 'dinner: grilled fish, sweet potato', 'breakfast: smoothie', 'lunch: chickpea salad', 'dinner: vegetable stir-fry, rice'),
+(9, 'breakfast: eggs, toast', 'lunch: grilled chicken, vegetables', 'dinner: salmon, quinoa', 'breakfast: oatmeal, banana', 'lunch: salad, grilled tofu', 'dinner: stir-fry, brown rice'),
+(10, 'breakfast: greek yogurt, berries', 'lunch: turkey wrap, salad', 'dinner: grilled fish, sweet potato', 'breakfast: smoothie', 'lunch: chickpea salad', 'dinner: vegetable stir-fry, rice'),
+(11, 'breakfast: eggs, toast', 'lunch: grilled chicken, vegetables', 'dinner: salmon, quinoa', 'breakfast: oatmeal, banana', 'lunch: salad, grilled tofu', 'dinner: stir-fry, brown rice'),
+(12, 'breakfast: greek yogurt, berries', 'lunch: turkey wrap, salad', 'dinner: grilled fish, sweet potato', 'breakfast: smoothie', 'lunch: chickpea salad', 'dinner: vegetable stir-fry, rice'),
+(13, 'breakfast: eggs, toast', 'lunch: grilled chicken, vegetables', 'dinner: salmon, quinoa', 'breakfast: oatmeal, banana', 'lunch: salad, grilled tofu', 'dinner: stir-fry, brown rice'),
+(14, 'breakfast: greek yogurt, berries', 'lunch: turkey wrap, salad', 'dinner: grilled fish, sweet potato', 'breakfast: smoothie', 'lunch: chickpea salad', 'dinner: vegetable stir-fry, rice'),
+(15, 'breakfast: eggs, toast', 'lunch: grilled chicken, vegetables', 'dinner: salmon, quinoa', 'breakfast: oatmeal, banana', 'lunch: salad, grilled tofu', 'dinner: stir-fry, brown rice'),
+(16, 'breakfast: greek yogurt, berries', 'lunch: turkey wrap, salad', 'dinner: grilled fish, sweet potato', 'breakfast: smoothie', 'lunch: chickpea salad', 'dinner: vegetable stir-fry, rice'),
+(17, 'breakfast: eggs, toast', 'lunch: grilled chicken, vegetables', 'dinner: salmon, quinoa', 'breakfast: oatmeal, banana', 'lunch: salad, grilled tofu', 'dinner: stir-fry, brown rice'),
+(18, 'breakfast: greek yogurt, berries', 'lunch: turkey wrap, salad', 'dinner: grilled fish, sweet potato', 'breakfast: smoothie', 'lunch: chickpea salad', 'dinner: vegetable stir-fry, rice'),
+(19, 'breakfast: eggs, toast', 'lunch: grilled chicken, vegetables', 'dinner: salmon, quinoa', 'breakfast: oatmeal, banana', 'lunch: salad, grilled tofu', 'dinner: stir-fry, brown rice'),
+(20, 'breakfast: greek yogurt, berries', 'lunch: turkey wrap, salad', 'dinner: grilled fish, sweet potato', 'breakfast: smoothie', 'lunch: chickpea salad', 'dinner: vegetable stir-fry, rice');
+
+
+insert into diet_schedule (user_id, time, monday, tuesday, wednesday, thursday, friday, saturday)
+values
+(1, '08:00', 'eggs, toast', 'grilled chicken, vegetables', 'salmon, quinoa', 'oatmeal, banana', 'salad, grilled tofu', 'stir-fry, brown rice'),
+(2, '07:30', 'greek yogurt, berries', 'turkey wrap, salad', 'grilled fish, sweet potato', 'smoothie', 'chickpea salad', 'vegetable stir-fry, rice'),
+(3, '08:00', 'eggs, toast', 'grilled chicken, vegetables', 'salmon, quinoa', 'oatmeal, banana', 'salad, grilled tofu', 'stir-fry, brown rice'),
+(4, '07:30', 'greek yogurt, berries', 'turkey wrap, salad', 'grilled fish, sweet potato', 'smoothie', 'chickpea salad', 'vegetable stir-fry, rice'),
+(5, '08:00', 'eggs, toast', 'grilled chicken, vegetables', 'salmon, quinoa', 'oatmeal, banana', 'salad, grilled tofu', 'stir-fry, brown rice'),
+(6, '07:30', 'greek yogurt, berries', 'turkey wrap, salad', 'grilled fish, sweet potato', 'smoothie', 'chickpea salad', 'vegetable stir-fry, rice'),
+(7, '08:00', 'eggs, toast', 'grilled chicken, vegetables', 'salmon, quinoa', 'oatmeal, banana', 'salad, grilled tofu', 'stir-fry, brown rice'),
+(8, '07:30', 'greek yogurt, berries', 'turkey wrap, salad', 'grilled fish, sweet potato', 'smoothie', 'chickpea salad', 'vegetable stir-fry, rice'),
+(9, '08:00', 'eggs, toast', 'grilled chicken, vegetables', 'salmon, quinoa', 'oatmeal, banana', 'salad, grilled tofu', 'stir-fry, brown rice'),
+(10, '07:30', 'greek yogurt, berries', 'turkey wrap, salad', 'grilled fish, sweet potato', 'smoothie', 'chickpea salad', 'vegetable stir-fry, rice'),
+(11, '08:00', 'eggs, toast', 'grilled chicken, vegetables', 'salmon, quinoa', 'oatmeal, banana', 'salad, grilled tofu', 'stir-fry, brown rice'),
+(12, '07:30', 'greek yogurt, berries', 'turkey wrap, salad', 'grilled fish, sweet potato', 'smoothie', 'chickpea salad', 'vegetable stir-fry, rice'),
+(13, '08:00', 'eggs, toast', 'grilled chicken, vegetables', 'salmon, quinoa', 'oatmeal, banana', 'salad, grilled tofu', 'stir-fry, brown rice'),
+(14, '07:30', 'greek yogurt, berries', 'turkey wrap, salad', 'grilled fish, sweet potato', 'smoothie', 'chickpea salad', 'vegetable stir-fry, rice'),
+(15, '08:00', 'eggs, toast', 'grilled chicken, vegetables', 'salmon, quinoa', 'oatmeal, banana', 'salad, grilled tofu', 'stir-fry, brown rice'),
+(16, '07:30', 'greek yogurt, berries', 'turkey wrap, salad', 'grilled fish, sweet potato', 'smoothie', 'chickpea salad', 'vegetable stir-fry, rice'),
+(17, '08:00', 'eggs, toast', 'grilled chicken, vegetables', 'salmon, quinoa', 'oatmeal, banana', 'salad, grilled tofu', 'stir-fry, brown rice'),
+(18, '07:30', 'greek yogurt, berries', 'turkey wrap, salad', 'grilled fish, sweet potato', 'smoothie', 'chickpea salad', 'vegetable stir-fry, rice'),
+(19, '08:00', 'eggs, toast', 'grilled chicken, vegetables', 'salmon, quinoa', 'oatmeal, banana', 'salad, grilled tofu', 'stir-fry, brown rice'),
+(20, '07:30', 'greek yogurt, berries', 'turkey wrap, salad', 'grilled fish, sweet potato', 'smoothie', 'chickpea salad', 'vegetable stir-fry, rice');
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+1-->function to calculate bmi:
+
+create or replace function calculate_bmi(weight numeric, height numeric)
+returns numeric as $$
+	declare
+ans numeric;
+begin
+	ans := weight / (height * height)*10000;
+    return ans;
+end;
+$$ language plpgsql;
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+2-->procedure to update body weight:
+
+create or replace procedure update_body_weight(new_user_id integer, new_weight numeric)
+as $$
+begin
+    update details set body_weight = new_weight where user_id = new_user_id;
+end;
+$$ language plpgsql;
+
+-----------------------------------------------------------------------------------------------------------------------------
+3-->function to get bmi range:
+create or replace function get_bmi_range(bmi numeric)
+returns varchar(100) as $$
+begin
+    if bmi < 18.5 then
+        return 'underweight';
+    elsif bmi < 24.9 then
+        return 'normal';
+    elsif bmi < 29.9 then
+        return 'overweight';
+    else
+        return 'obese';
+    end if;
+end;
+$$ language plpgsql;
+
+-----------------------------------------------------------------------------------------------------------------------------
+4-->procedure to update workout plan:
+
+create or replace procedure update_workout_plan(new_user_id integer, new_chest varchar, new_back varchar)
+as $$
+begin
+    update workout_plan set chest = new_chest, back = new_back where user_id = new_user_id;
+end;
+$$ language plpgsql;
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+5-->function to calculate calorie requirement:
+
+create or replace function calculate_calorie_requirement(age integer, weight numeric, height numeric, activity_level numeric)
+returns numeric as $$
+begin
+    return (10 * weight) + (6.25 * height) - (5 * age) + activity_level;
+end;
+$$ language plpgsql;
+
+-----------------------------------------------------------------------------------------------------------------------------
+6--> procedure to assign diet plan:
+
+create or replace procedure assign_diet_plan(new_user_id integer, diet_plan varchar)
+as $$
+begin
+    update diet_name set monday = diet_plan where user_id = new_user_id;
+end;
+$$ language plpgsql;
+
+-----------------------------------------------------------------------------------------------------------------------------
+7-->subquery to retrieve users and their workout plan:
+
+ select d.first_name, d.last_name, w.chest, w.back
+ from details d
+ inner join workout_plan w on d.user_id = w.user_id;
+
+-----------------------------------------------------------------------------------------------------------------------------
+8--> function with aggregate function to calculate average bmi:
+
+create or replace function calculate_average_bmi()
+returns numeric as $$
+begin
+    return (select avg(bmi) from calculated_details);
+end;
+$$ language plpgsql;
+
+-----------------------------------------------------------------------------------------------------------------------------
+9-->subquery to retrieve users and their assigned diet plan:
+
+select d.first_name, d.last_name, dn.monday, dn.tuesday
+from details d
+inner join diet_name dn on d.user_id = dn.user_id;
+-----------------------------------------------------------------------------------------------------------------------------
+10-->count number of user by cursor  
+
+do
+$$
+declare 
+c1 details.user_id%type;
+c2 calculated_details.user_id%type;
+c3 diet_name.user_id%type;
+c4 diet_schedule.user_id%type;
+c5 range.user_id%type;
+c6 workout_plan.user_id%type;
+begin
+select count(*) into c1 from details;
+select count(*) into c2 from calculated_details; 
+select count(*) into c3 from diet_name; 
+select count(*) into c4 from diet_schedule; 
+select count(*) into c5 from range; 
+select count(*) into c6 from workout_plan; 
+
+raise notice 'details table has % column',c1;
+raise notice 'calculated_details table has % column',c2;
+raise notice 'diet_table table has % column',c3;
+raise notice 'diet_schedule table has % column',c4;
+raise notice 'range table has % column',c5;
+raise notice 'workout_plan table has % column',c6;
+end;
+$$
+--------------------------------------------------------------------------------------------------------------------------
+*/
